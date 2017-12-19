@@ -1,0 +1,102 @@
+<html>
+	<HEAD>
+	</HEAD>
+	<STYLE TYPE="text/css">
+			div.ship_style{
+				position: absolute;
+				background-color: black; 
+				margin-top: -40px;
+				margin-right: 40px;
+				top: 100%;
+				color: white;
+				padding-top: 5px;
+				padding-left: 3px;
+				z-index: 1;
+			}
+		div.block_style{
+			position: relative;
+			border-style: double;
+			border-width: 5px;
+			border-color: black; 
+			padding: 2px;
+			margin: 2px;
+			background-color: grey;
+			width: 20px;
+			float: left;
+			z-index: 1;
+		}
+		div.shell_style{
+			position: absolute;
+			width: 4px;
+			height: 10px;
+			background-color: red;
+			top: 100%;
+			margin-top: -40px;
+			z-index: 0;
+		}
+	</STYLE>
+	<body id="1">
+		<div id="ship" class="ship_style" style="height: 30px; width: 30px;">ship</div>
+		<TABLE align=center>
+			<tr>
+				<td id="blocks">
+				</td>
+			</tr>
+		</TABLE>
+		<script type="text/javascript">
+
+		document.body.style.overflow = "hidden";
+		s=document.getElementById("ship");
+
+		s.onmouseenter=function(event)
+		{
+				flag=true;
+
+		}		
+
+		document.body.onmousemove=function(event)
+		{
+			if(flag)
+			{
+				x=event.pageX-parseInt(s.offsetWidth)*0.5;
+		 		s.style.left=(x)+"px";
+		 	}
+		}
+
+		document.body.onclick = function(event){
+			if(flag)
+			{
+				var newShell = document.createElement('div');
+				newShell.className="shell_style";
+				newShell.style.left=(parseInt(s.style.left)+parseInt(s.offsetWidth)*0.5)+'px';
+				newShell.style.top=document.body.clientHeight+'px';
+				document.body.appendChild(newShell);
+				
+				m=setInterval(function(){
+					newShell.style.top=(parseInt(newShell.style.top)-5)+'px';			
+					}
+					, 30)
+			}
+		}
+
+		createBlocks = function(num,flag)
+		{
+			for(i=0; i<num; i++)
+			{
+				var newBlock = document.createElement('div');
+				newBlock.className='block_style';
+				document.getElementById('blocks').appendChild(newBlock);
+				if(flag)
+					newBlock.style.left=(newBlock.offsetWidth*0.5)+'px';
+			}
+			document.getElementById('blocks').innerHTML+="<br>";
+		}
+
+		createBlocks(15,0);
+		createBlocks(14,1);
+		createBlocks(15,0);
+		createBlocks(14,1);
+
+		</script>
+	</body>
+</html>
